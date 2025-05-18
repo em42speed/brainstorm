@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain-storm</title>
+    <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <h1>We are brainstorming! Come back soon.</h1>
+
+    <!-- <img src="/neocities.png"> -->
+
+  </style>
+</head>
+<body>
+  <canvas id="fractalCanvas" width="800" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById('fractalCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let maxDepth = 0;
+    const finalDepth = 10;
+    const delay = 200; // milliseconds between each depth step
+
+    function drawTree(x, y, length, angle, depth) {
+      if (depth === 0) return;
+
+      const xEnd = x + length * Math.cos(angle);
+      const yEnd = y + length * Math.sin(angle);
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(xEnd, yEnd);
+      ctx.stroke();
+
+      drawTree(xEnd, yEnd, length * 0.7, angle - Math.PI / 6, depth - 1);
+      drawTree(xEnd, yEnd, length * 0.7, angle + Math.PI / 6, depth - 1);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'gold';
+      ctx.lineWidth = 2;
+
+      drawTree(400, 550, 100, -Math.PI / 2, maxDepth);
+
+      if (maxDepth < finalDepth) {
+        maxDepth++;
+        setTimeout(() => {
+          requestAnimationFrame(animate);
+        }, delay);
+      }
+    }
+
+    animate();
+  </script>
+
+  </body>
+</html>
