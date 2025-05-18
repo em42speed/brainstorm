@@ -3,62 +3,118 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brain-storm</title>
-    <!-- The style.css file allows you to change the look of your web pages.
-         If you include the next line in all your web pages, they will all share the same look.
-         This makes it easier to make new pages for your site. -->
-    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <title>Brain-Storm</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" media="all">
   </head>
   <body>
     <h1>We are brainstorming! Come back soon.</h1>
-
+      <p>While we're setting up, check out <a href=resume.html>Sergio's resume</a> and <a href="https://emmettspeed.phd/cv.html">Emmett's CV</a> (and the rest of Emmett's site!)</p>
     <!-- <img src="/neocities.png"> -->
 
   </style>
 </head>
 <body>
-  <canvas id="fractalCanvas" width="800" height="600"></canvas>
+  <canvas id="crackCanvas"></canvas>
 
   <script>
-    const canvas = document.getElementById('fractalCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let maxDepth = 0;
-    const finalDepth = 10;
-    const delay = 200; // milliseconds between each depth step
-
-    function drawTree(x, y, length, angle, depth) {
-      if (depth === 0) return;
-
-      const xEnd = x + length * Math.cos(angle);
-      const yEnd = y + length * Math.sin(angle);
-
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(xEnd, yEnd);
-      ctx.stroke();
-
-      drawTree(xEnd, yEnd, length * 0.7, angle - Math.PI / 6, depth - 1);
-      drawTree(xEnd, yEnd, length * 0.7, angle + Math.PI / 6, depth - 1);
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'gold';
-      ctx.lineWidth = 2;
-
-      drawTree(400, 550, 100, -Math.PI / 2, maxDepth);
-
-      if (maxDepth < finalDepth) {
-        maxDepth++;
-        setTimeout(() => {
-          requestAnimationFrame(animate);
-        }, delay);
+    const canvas = document.getElementById("crackCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    ctx.lineCap = "round";
+    ctx.shadowColor = "gold";
+    ctx.shadowBlur = 6;
+    
+    class Crack {
+      constructor(x, y, angle, depth = 0, maxDepth = 35) {
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
+        this.depth = depth;
+        this.maxDepth = maxDepth;
+        this.done = false;
+      }
+    
+      update() {
+        if (this.depth >= this.maxDepth) {
+          this.done = true;
+          return;
+        }
+    
+        const length = 10 + Math.random() * 4;
+        const newAngle = this.angle + (Math.random() - 0.5) * 0.1;
+        const newX = this.x + Math.cos(newAngle) * length;
+        const newY = this.y + Math.sin(newAngle) * length;
+    
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(newX, newY);
+        ctx.strokeStyle = `hsl(45, 100%, ${70 - this.depth * 1.5}%)`;
+        ctx.lineWidth = Math.max(0.5, 2.5 - this.depth * 0.05);
+        ctx.stroke();
+    
+        this.x = newX;
+        this.y = newY;
+        this.angle = newAngle;
+        this.depth++;
+    
+        if (Math.random() < 0.07 && this.depth > 5 && this.depth < this.maxDepth - 5) {
+          cracks.push(new Crack(this.x, this.y, this.angle + (Math.random() - 0.5) * 1.2, this.depth, this.maxDepth - 5));
+        }
       }
     }
-
+    
+    // Generate a realistic burst of cracks
+    function createImpact(x, y, spokes = 12) {
+      // Small central burst (glass star shape)
+      for (let i = 0; i < spokes; i++) {
+        const angle = (Math.PI * 2 / spokes) * i + (Math.random() - 0.5) * 0.1;
+        const len = 6 + Math.random() * 10;
+        const endX = x + Math.cos(angle) * len;
+        const endY = y + Math.sin(angle) * len;
+    
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(endX, endY);
+        ctx.strokeStyle = "gold";
+        ctx.lineWidth = 1.5;
+        ctx.shadowBlur = 2;
+        ctx.stroke();
+    
+        // Start longer cracks from end points
+        cracks.push(new Crack(endX, endY, angle));
+      }
+    }
+    
+    // Store cracks
+    const cracks = [];
+    
+    // Make 1-2 realistic impact points
+    const originCount = 1;
+    for (let i = 0; i < originCount; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      createImpact(x, y, 10 + Math.floor(Math.random() * 4));
+    }
+    
+    // Animate cracks
+    function animate() {
+      requestAnimationFrame(animate);
+      cracks.forEach(c => {
+        if (!c.done) c.update();
+      });
+    }
+    
+    // Resize support
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+    
+    // Start animation
     animate();
-  </script>
+    </script>
 
   </body>
 </html>
