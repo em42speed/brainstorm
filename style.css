@@ -14,3 +14,35 @@ body {
   max-width: 1000px;
   margin-left: 40px;
 }
+
+a:visited {
+  color: white;
+}
+
+a {
+  color: gold;
+}
+
+h1 {
+  background: #000000;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 0% 55%,
+    rgb(218, 165, 32) 100%
+  );
+  border: 2px solid hsla(43, 74%, 49%, 1);
+  margin: 40px auto;
+  padding: 40px;
+  text-align: center;
+  color: white;
+  transition: color 0.3s ease;
+}
+.intro {
+  text-align: center;
+}
+.resume {
+  border: 2px solid goldenrod;
+  margin: 10px;
+  padding: 20px;
+}

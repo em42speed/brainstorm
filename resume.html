@@ -9,15 +9,15 @@
   <body>
     <div class="intro">
         <h1>Sergio A. Hernandez</h1>
-            <p>sergio@brain-storm.co</p>
-            <p>(801) 809-6536</p>
-            <p><a href=https://www.linkedin.com/in/sergio-hernandez-stem>LinkedIn</a> </p>
+            <p>sergio@brain-storm.co <br>
+            (801) 809-6536 <br>
+            <a href=https://www.linkedin.com/in/sergio-hernandez-stem>LinkedIn</a> </p>
     </div>
-    <div>
+    <div class="resume">
         <h2>Professional Summary</h2>
         Detail-oriented, bilingual (English/Spanish) professional with over 8 years of experience in executive support, project coordination, event planning, and team leadership. Proven ability to manage communications, logistics, and high-profile projects with discretion and creativity. Excels in fast-paced, remote environments, with a background in supporting public-facing professionals and high-volume operations. Passionate about travel, storytelling, and helping visionaries bring big ideas to life.
     </div>
-    <div>
+    <div class="resume">
         <h2>Key Skills & Expertise</h2>
             <h3>Executive & Administrative Support</h3>
                 <ul>
@@ -117,7 +117,7 @@
                     </li>
                 </ul>
     </div>
-    <div>
+    <div class="resume">
         <h2>Professional Experience</h2>
         <ul>
             <li>
@@ -140,7 +140,7 @@
             Detailed job descriptions available upon request. Experience spans public events, creative production, B2B support, and team leadership in remote and hybrid settings.
         </p>
     </div>
-    <div>
+    <div class="resume">
         <h2>Education</h2>
         <ul>
             <li>
@@ -153,7 +153,7 @@
             </li>
         </ul>
     </div>
-    <div>
+    <div class="resume">
         <h2>Bonus Skills & Perks</h2>
         <ul>
             <li>
@@ -173,3 +173,30 @@
             </li>
         </ul>
 </div>
+
+<script>
+    // Get all the H1 elements on the page
+    const h1Elements = document.querySelectorAll('h1');
+  
+    // Store the original colors of the H1 elements
+    const originalColors = new Map();
+  
+    h1Elements.forEach(h1 => {
+      // Store the initial color of each H1
+      originalColors.set(h1, window.getComputedStyle(h1).color);
+  
+      // Add event listener for mouseover (scrollover)
+      h1.addEventListener('mouseover', function() {
+        this.style.color = 'goldenrod';
+      });
+  
+      // Add event listener for mouseout (when mouse leaves the element)
+      h1.addEventListener('mouseout', function() {
+        // Revert to its original stored color
+        this.style.color = originalColors.get(this);
+      });
+    });
+  </script>
+
+</body>
+</html>

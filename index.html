@@ -116,5 +116,31 @@
     animate();
     </script>
 
+<script>
+  // Get all the H1 elements on the page
+  const h1Elements = document.querySelectorAll('h1');
+
+  // Store the original colors of the H1 elements
+  const originalColors = new Map();
+
+  h1Elements.forEach(h1 => {
+    // Store the initial color of each H1
+    originalColors.set(h1, window.getComputedStyle(h1).color);
+
+    // Add event listener for mouseover (scrollover)
+    h1.addEventListener('mouseover', function() {
+      this.style.color = 'goldenrod';
+    });
+
+    // Add event listener for mouseout (when mouse leaves the element)
+    h1.addEventListener('mouseout', function() {
+      // Revert to its original stored color
+      this.style.color = originalColors.get(this);
+    });
+  });
+</script>
+
+
+
   </body>
 </html>
