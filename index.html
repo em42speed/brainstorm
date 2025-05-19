@@ -1,146 +1,80 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brain-Storm</title>
-    <link href="./style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="./style.css" rel="stylesheet" type="text/css" media="all" />
   </head>
   <body>
-    <h1>We are brainstorming! Come back soon.</h1>
-      <p>While we're setting up, check out <a href=resume.html>Sergio's resume</a> and <a href="https://emmettspeed.phd/cv.html">Emmett's CV</a> (and the rest of Emmett's site!)</p>
-    <!-- <img src="/neocities.png"> -->
+    <div>
+      <h1 class="site_title">BRAIN - STORM</h1>
+      <p>
+        Hello and welcome to BRAIN-STORM.CO, a joint venture of Emmett Speed and
+        Sergio Hernandez!
+      </p>
+      <p>
+        We've built this site to showcase our skills, host our respective
+        resumes and portfolios, and collaborate on creative projects.
+      </p>
+    </div>
+    <div class="about_us_container">
+      <div class="about_us">
+        <p>
+          I'm Emmett Speed (he/they), an enthusiastic advocate for enhancing
+          math education and a Ph.D. candidate in Educational Neuroscience from
+          Utah State University (defending 5/19/2025). I have over 10 years of
+          experience in educational research and program management. I am
+          passionate about making a difference in education and am committed to
+          using my research and practical skills to create more effective and
+          equitable learning experiences. I have a proven track record of
+          developing databases, streamlining workflow, managing research
+          projects, and securing grant funding.<br /><br />
+          Check out <a href="https://emmettspeed.phd/cv.html">my CV</a> (and the
+          rest of my personal site)!
+        </p>
+      </div>
+      <div class="about_us">
+        <p>
+          Hi, I’m Sergio Hernandez (he/him), a bilingual (English/Spanish)
+          professional with over 8 years of experience supporting teams,
+          planning events, and keeping complex projects running smoothly. I’ve
+          worked in everything from executive support and B2B logistics to STEM
+          outreach and large public events, and I love helping big ideas become
+          reality. I’m especially comfortable in fast paced, remote environments
+          where clear communication and flexibility are key. Outside of work,
+          I’m a longtime dungeon master and hands-on maker, which means I’m used
+          to thinking creatively, adapting quickly, and solving problems on the
+          fly. Whether it’s coordinating travel, wrangling details, or leading a
+          team through uncharted territory, I’m all about making things happen.
+          <br /><br />
+          Take a look at <a href="resume.html">my resume</a>.
+        </p>
+      </div>
+    </div>
 
-  </style>
-</head>
-<body>
-  <canvas id="crackCanvas"></canvas>
+    <script>
+      // Get all the H1 elements on the page
+      const h1Elements = document.querySelectorAll("h1");
 
-  <script>
-    const canvas = document.getElementById("crackCanvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    ctx.lineCap = "round";
-    ctx.shadowColor = "gold";
-    ctx.shadowBlur = 6;
-    
-    class Crack {
-      constructor(x, y, angle, depth = 0, maxDepth = 35) {
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.depth = depth;
-        this.maxDepth = maxDepth;
-        this.done = false;
-      }
-    
-      update() {
-        if (this.depth >= this.maxDepth) {
-          this.done = true;
-          return;
-        }
-    
-        const length = 10 + Math.random() * 4;
-        const newAngle = this.angle + (Math.random() - 0.5) * 0.1;
-        const newX = this.x + Math.cos(newAngle) * length;
-        const newY = this.y + Math.sin(newAngle) * length;
-    
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(newX, newY);
-        ctx.strokeStyle = `hsl(45, 100%, ${70 - this.depth * 1.5}%)`;
-        ctx.lineWidth = Math.max(0.5, 2.5 - this.depth * 0.05);
-        ctx.stroke();
-    
-        this.x = newX;
-        this.y = newY;
-        this.angle = newAngle;
-        this.depth++;
-    
-        if (Math.random() < 0.07 && this.depth > 5 && this.depth < this.maxDepth - 5) {
-          cracks.push(new Crack(this.x, this.y, this.angle + (Math.random() - 0.5) * 1.2, this.depth, this.maxDepth - 5));
-        }
-      }
-    }
-    
-    // Generate a realistic burst of cracks
-    function createImpact(x, y, spokes = 12) {
-      // Small central burst (glass star shape)
-      for (let i = 0; i < spokes; i++) {
-        const angle = (Math.PI * 2 / spokes) * i + (Math.random() - 0.5) * 0.1;
-        const len = 6 + Math.random() * 10;
-        const endX = x + Math.cos(angle) * len;
-        const endY = y + Math.sin(angle) * len;
-    
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(endX, endY);
-        ctx.strokeStyle = "gold";
-        ctx.lineWidth = 1.5;
-        ctx.shadowBlur = 2;
-        ctx.stroke();
-    
-        // Start longer cracks from end points
-        cracks.push(new Crack(endX, endY, angle));
-      }
-    }
-    
-    // Store cracks
-    const cracks = [];
-    
-    // Make 1-2 realistic impact points
-    const originCount = 1;
-    for (let i = 0; i < originCount; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      createImpact(x, y, 10 + Math.floor(Math.random() * 4));
-    }
-    
-    // Animate cracks
-    function animate() {
-      requestAnimationFrame(animate);
-      cracks.forEach(c => {
-        if (!c.done) c.update();
+      // Store the original colors of the H1 elements
+      const originalColors = new Map();
+
+      h1Elements.forEach((h1) => {
+        // Store the initial color of each H1
+        originalColors.set(h1, window.getComputedStyle(h1).color);
+
+        // Add event listener for mouseover (scrollover)
+        h1.addEventListener("mouseover", function () {
+          this.style.color = "goldenrod";
+        });
+
+        // Add event listener for mouseout (when mouse leaves the element)
+        h1.addEventListener("mouseout", function () {
+          // Revert to its original stored color
+          this.style.color = originalColors.get(this);
+        });
       });
-    }
-    
-    // Resize support
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-    
-    // Start animation
-    animate();
     </script>
-
-<script>
-  // Get all the H1 elements on the page
-  const h1Elements = document.querySelectorAll('h1');
-
-  // Store the original colors of the H1 elements
-  const originalColors = new Map();
-
-  h1Elements.forEach(h1 => {
-    // Store the initial color of each H1
-    originalColors.set(h1, window.getComputedStyle(h1).color);
-
-    // Add event listener for mouseover (scrollover)
-    h1.addEventListener('mouseover', function() {
-      this.style.color = 'goldenrod';
-    });
-
-    // Add event listener for mouseout (when mouse leaves the element)
-    h1.addEventListener('mouseout', function() {
-      // Revert to its original stored color
-      this.style.color = originalColors.get(this);
-    });
-  });
-</script>
-
-
-
   </body>
 </html>

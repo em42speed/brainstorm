@@ -33,16 +33,36 @@ h1 {
   );
   border: 2px solid hsla(43, 74%, 49%, 1);
   margin: 40px auto;
-  padding: 40px;
+  padding: 20px;
   text-align: center;
   color: white;
   transition: color 0.3s ease;
 }
+
+.site_title {
+  font-size: 40px;
+}
+
 .intro {
   text-align: center;
 }
 .resume {
   border: 2px solid goldenrod;
   margin: 10px;
+  padding: 20px;
+}
+
+.about_us_container {
+  display: flex;
+  column-gap: 50px;
+  justify-content: space-between;
+}
+
+.about_us {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  max-width: 450px;
+  border: 2px solid goldenrod;
   padding: 20px;
 }
