@@ -3,16 +3,17 @@
    "how to change link color." */
 
 html {
-  background-color: black;
+  background-image: url("./resources/Kintsugi-Surface-Close-up.jpg");
+  background-color: rgba(0, 0, 0, 1);
+  background-size: cover;
 }
 
 body {
-  background-color: black;
   color: white;
   font-family: Verdana;
   line-height: 1.5;
   max-width: 1000px;
-  margin-left: 40px;
+  margin: auto;
 }
 
 a:visited {
@@ -24,7 +25,7 @@ a {
 }
 
 h1 {
-  background: #000000;
+  background-color: rgba(0, 0, 0, 0.5);
   background: radial-gradient(
     circle,
     rgba(0, 0, 0, 1) 0%,
@@ -47,6 +48,7 @@ h1 {
   text-align: center;
 }
 .resume {
+  background-color: rgba(0, 0, 0, 0.5);
   border: 2px solid goldenrod;
   margin: 10px;
   padding: 20px;
@@ -59,10 +61,18 @@ h1 {
 }
 
 .about_us {
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-flow: column wrap;
   align-items: flex-start;
   max-width: 450px;
   border: 2px solid goldenrod;
   padding: 20px;
+}
+.hello {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid goldenrod;
+  margin: 20px;
+  padding: 20px;
+  max-width: 1000x;
 }
